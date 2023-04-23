@@ -1,13 +1,20 @@
+
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using BuberDinner.Application.Services.Authentication;
 
 
- namespace BuberDinner.Application;
+
+namespace BuberDinner.Application;
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        // services.AddMediatR(typeof(DependencyInjection).Assembly);
+        services.AddMediatR(cfg =>
+                            {
+                                cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly, typeof(DependencyInjection).Assembly);
+                            });
+        
         return services;
     }
 }
