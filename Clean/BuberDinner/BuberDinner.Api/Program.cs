@@ -7,9 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 {
     builder.Services
+        .AddInfrastructure(builder.Configuration)
         .AddPresentation()
-        .AddApplication()
-        .AddInfrastructure(builder.Configuration);
+        .AddApplication();
 
     
 }
@@ -17,8 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 {
+    app.UseAuthentication();
     app.UseExceptionHandler("/error");
     app.UseHttpsRedirection();
+    app.UseAuthorization();
     app.MapControllers();
     app.Run();
 };
